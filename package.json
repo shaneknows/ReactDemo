@@ -2,7 +2,7 @@
   "name": "react-test",
   "version": "0.1.0",
   "private": true,
-  "hompage": "https://shaneknows.github.io/ReactDemo",
+  "homepage": "https://shaneknows.github.io/ReactDemo",
   "dependencies": {
     "react": "^15.5.4",
     "react-dom": "^15.5.4"
