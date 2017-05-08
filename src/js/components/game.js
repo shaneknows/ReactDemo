@@ -7,6 +7,7 @@ class Game extends Component {
         this.state = {
             history: [{
                 squares: Array(9).fill(null),
+                movePosition: null
             }],
             xIsNext: true,
             stepNumber: 0,
@@ -20,10 +21,15 @@ class Game extends Component {
 
         const moves = history.map((step, move) => {
             const desc = move ? 
-                `Move # ${move}` :
+                `Move # ${move} ${step.movePosition}` :
                 'Game Start';
+            
+            // Bold the current selected step
+            const styling = {
+                fontWeight: move === this.state.stepNumber ? "bold" : ""
+            }
             return (
-                <li key={move}>
+                <li key={move} style={styling}>
                     <a href="#" onClick={() => this.jumpTo(move)}>{desc}</a>
                 </li>
             );
@@ -83,6 +89,7 @@ class Game extends Component {
         this.setState({
             history: history.concat([{
                 squares: squares,
+                movePosition: this.getMovePosition(i)
             }]),
             xIsNext: !this.state.xIsNext,
             stepNumber: history.length,
@@ -94,6 +101,31 @@ class Game extends Component {
             stepNumber: step,
             xIsNext: (step % 2) ? false : true,
         });
+    }
+
+    getMovePosition(i) {
+        switch(i){
+            case 0:
+                return '(0, 0)';
+            case 1:
+                return '(0, 1)';
+            case 2:
+                return '(0, 2)';
+            case 3:
+                return '(1, 0)';
+            case 4:
+                return '(1, 1)';
+            case 5:
+                return '(1, 2)';
+            case 6:
+                return '(2, 0)';
+            case 7:
+                return '(2, 1)';
+            case 8:
+                return '(2, 2)';
+            default:
+                return '';
+        }
     }
 }
 
