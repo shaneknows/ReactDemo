@@ -5,8 +5,11 @@ import React, { Component } from 'react';
  */
 class Square extends Component {
     render() {
+        const buttonStyle = {
+            backgroundColor: (this.props.isWinningMove) ? 'yellow' : ''
+        };
         return (
-        <button className="square" onClick={() => this.props.onClick()}>
+        <button className="square" onClick={() => this.props.onClick()} style={buttonStyle}>
             {this.props.value}
         </button>
         );

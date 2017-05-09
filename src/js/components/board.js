@@ -3,10 +3,15 @@ import Square from "./square";
 
 class Board extends Component {
     renderSquare(i) {
+        let isWinningMove;
+        if (this.props.winningMove) {
+            isWinningMove = this.props.winningMove.includes(i);
+        }
         return (
             <Square 
                 value={this.props.squares[i]}
                 key={i}
+                isWinningMove={isWinningMove}
                 onClick={() => this.props.onClick(i)}
              />
         );

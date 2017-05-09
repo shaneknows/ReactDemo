@@ -36,8 +36,10 @@ class Game extends Component {
         });
 
         let status;
+        let winningMove;
         if (winner) {
-            status = `Winner: ${winner}`;
+            winningMove = winner.winningMove;
+            status = `Winner: ${winner.player}`;
         } else {
             status = `Next player: ${this.state.xIsNext ? 'X' : 'O'}`;
         }
@@ -47,6 +49,7 @@ class Game extends Component {
             <div className="game-board">
             <Board 
                 squares={current.squares}
+                winningMove={winningMove}
                 onClick={(i) => this.handleClick(i)}
                 />
             </div>
@@ -72,7 +75,10 @@ class Game extends Component {
         for (let i = 0; i < lines.length; i++) {
             const [a, b, c] = lines[i];
             if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-                return squares[a];
+                return { 
+                    player: squares[a], 
+                    winningMove: lines[i] 
+                };
             }
         }
         return null;
@@ -82,6 +88,7 @@ class Game extends Component {
         const history = this.state.history.slice(0, this.state.stepNumber + 1);
         const current = history[history.length-1];
         const squares = current.squares.slice();
+
         if (this.calculateWinner(squares) || squares[i]) {
             return;
         }
