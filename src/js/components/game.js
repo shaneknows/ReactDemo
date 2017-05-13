@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Board from "./board";
+import "../../css/game.css";
 
 class Game extends Component {
     constructor() {
@@ -11,6 +12,7 @@ class Game extends Component {
             }],
             xIsNext: true,
             stepNumber: 0,
+            sortDescending: true
         };
     }
 
@@ -26,7 +28,7 @@ class Game extends Component {
             
             // Bold the current selected step
             const styling = {
-                fontWeight: move === this.state.stepNumber ? "bold" : ""
+                fontStyle: move === this.state.stepNumber ? "oblique" : ""
             }
             return (
                 <li key={move} style={styling}>
@@ -45,7 +47,7 @@ class Game extends Component {
         }
 
         return (
-        <div className="game">
+        <div className="game container content">
             <div className="game-board">
             <Board 
                 squares={current.squares}
@@ -55,7 +57,12 @@ class Game extends Component {
             </div>
             <div className="game-info">
             <div>{status}</div>
-            <ol>{moves}</ol>
+            <ul className="move-toggle">
+                <li>
+                    <h3>Moves <button><i className={(this.state.sortDescending) ? "down" : "up"} onClick={() => this.toggleArrow()} /></button></h3>
+                </li>
+            </ul>
+            <ol>{(this.state.sortDescending) ? moves : moves.reverse()}</ol>
             </div>
         </div>
         );
@@ -108,6 +115,13 @@ class Game extends Component {
             stepNumber: step,
             xIsNext: (step % 2) ? false : true,
         });
+    }
+
+    toggleArrow() {
+        this.setState({
+            sortDescending: !this.state.sortDescending
+        });
+
     }
 
     getMovePosition(i) {
